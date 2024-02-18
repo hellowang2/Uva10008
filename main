@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct stu {
+    char letter;
+    int times;
+};
+
+
+bool compare(const stu& a, const stu& b) {
+    return a.times > b.times || (a.times == b.times && a.letter < b.letter);
+}
+
+int main() {
+    struct stu table[26];
+    for(int i = 0; i < 26; i++) {
+        table[i].letter = 'A' + i;
+        table[i].times = 0;
+    }
+
+    string input;
+    string temp;
+    int teams;
+
+    cin >> teams;
+    //cin.ignore();
+
+    for(int i = 0; i < teams+1; i++) {
+        getline(cin, temp);
+        input = input + temp;
+    }
+
+    for(auto ch : input) {
+        int k = toupper(ch) - 'A';
+        if(k >= 0 && k < 26) {
+            table[k].times++;
+        }
+    }
+
+    sort(table, table + 26, compare);
+
+    for(int i = 0; i < 26; i++) {
+        if(table[i].times > 0) {
+            cout << table[i].letter << " " << table[i].times << endl;
+        }
+    }
+
+    return 0;
+}
